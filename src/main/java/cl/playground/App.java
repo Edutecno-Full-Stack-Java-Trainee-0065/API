@@ -7,8 +7,7 @@ public class App {
 
     public static void main( String[] args ) {
 
-
-        ApiClient API = ApiClientFactory.createApiClient("ten");
+        ApiClient API = ApiClientFactory.createApiClient("posts");
         System.out.println(API.getResponse());
     }
 }

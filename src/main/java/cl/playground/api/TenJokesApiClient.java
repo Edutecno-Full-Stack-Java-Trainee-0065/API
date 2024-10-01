@@ -2,12 +2,6 @@ package cl.playground.api;
 
 import cl.playground.modelo.ApiResponse;
 import cl.playground.util.Utils;
-import jakarta.ws.rs.client.Client;
-import jakarta.ws.rs.client.ClientBuilder;
-import jakarta.ws.rs.client.Invocation;
-import jakarta.ws.rs.client.WebTarget;
-import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Response;
 
 import java.util.ArrayList;
 import java.util.HashMap;

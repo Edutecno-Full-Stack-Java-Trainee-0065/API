@@ -38,6 +38,7 @@ public class Utils {
 
         return json.substring(valueStartIndex + 1, valueEndIndex); // EXTRAER Y DEVOLVER EL VALOR
     }
+
     public static String extractNumericValue(String json, String key) {
         String searchString = "\"" + key + "\""; // CREAMOS PATRON DE BUSQUEDA
 
@@ -82,6 +83,7 @@ public class Utils {
         }
         return json.substring(valueStartIndex, valueEndIndex).trim();
     }
+
     public static String extractObject(String json, String key) {
         String searchString = "\"" + key + "\""; // Creamos el patrón de búsqueda
 
@@ -104,6 +106,7 @@ public class Utils {
 
         return json.substring(objectStartIndex, objectEndIndex + 1); // Extraer y devolver el objeto completo
     }
+
     public static List<String> extractArrayElements(String json) {
 
         List<String> elements = new ArrayList<>();
@@ -192,8 +195,7 @@ public class Utils {
         WebTarget target = client.target(api).path(endpoint);
         Invocation.Builder invocationBuilder = target.request(MediaType.APPLICATION_JSON);
         Response apiResponse = invocationBuilder.get();
-        String jsonResponse = apiResponse.readEntity(String.class);
 
-        return jsonResponse;
+        return apiResponse.readEntity(String.class);
     }
 }

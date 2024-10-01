@@ -1,9 +1,6 @@
 package cl.playground.service;
 
-import cl.playground.api.ApiClient;
-import cl.playground.api.IssApiClient;
-import cl.playground.api.JokeApiClient;
-import cl.playground.api.TenJokesApiClient;
+import cl.playground.api.*;
 
 public class ApiClientFactory {
 
@@ -15,6 +12,8 @@ public class ApiClientFactory {
                 return new JokeApiClient();
             case "ten":
                 return new TenJokesApiClient();
+            case "posts":
+                return new TipyCodeApiClient();
             default:
                 throw new IllegalArgumentException("Unknown API type: " + type);
         }
