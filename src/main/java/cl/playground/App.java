@@ -1,12 +1,14 @@
 package cl.playground;
 
 import cl.playground.api.ApiClient;
+import cl.playground.service.ApiClientFactory;
 
 public class App {
 
     public static void main( String[] args ) {
 
-        System.out.println(ApiClient.conexionApi());
 
+        ApiClient API = ApiClientFactory.createApiClient("ten");
+        System.out.println(API.getResponse());
     }
 }
