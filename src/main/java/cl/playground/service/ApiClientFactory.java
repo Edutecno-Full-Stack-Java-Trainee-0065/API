@@ -14,6 +14,8 @@ public class ApiClientFactory {
                 return new TenJokesApiClient();
             case "posts":
                 return new TipyCodeApiClient();
+            case "picking":
+                return new PickingApiClient();
             default:
                 throw new IllegalArgumentException("Unknown API type: " + type);
         }

@@ -1,9 +1,6 @@
 package cl.playground.util;
 
-import jakarta.ws.rs.client.Client;
-import jakarta.ws.rs.client.ClientBuilder;
-import jakarta.ws.rs.client.Invocation;
-import jakarta.ws.rs.client.WebTarget;
+import jakarta.ws.rs.client.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
@@ -196,6 +193,36 @@ public class Utils {
         Invocation.Builder invocationBuilder = target.request(MediaType.APPLICATION_JSON);
         Response apiResponse = invocationBuilder.get();
 
+        return apiResponse.readEntity(String.class);
+    }
+
+    public static String postJsonRequest(String url, Map<String, String> headers, String jsonBody) {
+        Client client = ClientBuilder.newClient();
+        WebTarget target = client.target(url);
+        Invocation.Builder invocationBuilder = target.request(MediaType.APPLICATION_JSON);
+
+        if ( headers != null) {
+            for (Map.Entry<String, String> entry : headers.entrySet()) {
+                invocationBuilder.header(entry.getKey(), entry.getValue());
+            }
+        }
+
+        Response response = invocationBuilder.post(Entity.json(jsonBody));
+        return response.readEntity(String.class);
+    }
+
+    public static String jsonResponseObject(String url, Map<String, String> headers) {
+        Client client = ClientBuilder.newClient();
+        WebTarget target = client.target(url);
+        Invocation.Builder invocationBuilder = target.request(MediaType.APPLICATION_JSON);
+
+        if ( headers != null) {
+            for (Map.Entry<String, String> entry : headers.entrySet()) {
+                invocationBuilder.header(entry.getKey(), entry.getValue());
+            }
+        }
+
+        Response apiResponse = invocationBuilder.get();
         return apiResponse.readEntity(String.class);
     }
 }
