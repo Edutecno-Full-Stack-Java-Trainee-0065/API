@@ -8,8 +8,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Utility class providing various helper methods for JSON parsing, formatting, and API interactions.
+ */
 public class Utils {
 
+    /**
+     * Extracts a string value from a JSON string for a given key.
+     *
+     * @param json The JSON string to parse.
+     * @param key The key whose value is to be extracted.
+     * @return The string value associated with the key, or null if not found.
+     */
     public static String extractValue(String json, String key) {
         String searchString = "\"" + key + "\""; // CREAMOS PATRON DE BUSQUEDA
 
@@ -36,6 +46,13 @@ public class Utils {
         return json.substring(valueStartIndex + 1, valueEndIndex); // EXTRAER Y DEVOLVER EL VALOR
     }
 
+    /**
+     * Extracts a numeric value from a JSON string for a given key.
+     *
+     * @param json The JSON string to parse.
+     * @param key The key whose numeric value is to be extracted.
+     * @return The numeric value as a string, or null if not found or if the value is not numeric.
+     */
     public static String extractNumericValue(String json, String key) {
         String searchString = "\"" + key + "\""; // CREAMOS PATRON DE BUSQUEDA
 
@@ -81,6 +98,13 @@ public class Utils {
         return json.substring(valueStartIndex, valueEndIndex).trim();
     }
 
+    /**
+     * Extracts a nested object from a JSON string for a given key.
+     *
+     * @param json The JSON string to parse.
+     * @param key The key whose object value is to be extracted.
+     * @return The nested object as a string, or null if not found.
+     */
     public static String extractObject(String json, String key) {
         String searchString = "\"" + key + "\""; // Creamos el patrón de búsqueda
 
@@ -104,6 +128,12 @@ public class Utils {
         return json.substring(objectStartIndex, objectEndIndex + 1); // Extraer y devolver el objeto completo
     }
 
+    /**
+     * Extracts elements from a JSON array.
+     *
+     * @param json The JSON string containing the array to parse.
+     * @return A list of strings representing the elements in the array.
+     */
     public static List<String> extractArrayElements(String json) {
 
         List<String> elements = new ArrayList<>();
@@ -137,10 +167,23 @@ public class Utils {
         return elements;
     }
 
+    /**
+     * Formats an object as a JSON string.
+     *
+     * @param data The object to be formatted as JSON.
+     * @return A formatted JSON string representation of the object.
+     */
     public static String formatJsonResponse(Object data) {
         return formatJsonResponse(data, 0);
     }
 
+    /**
+     * Formats an object as a JSON string with indentation.
+     *
+     * @param data The object to be formatted as JSON.
+     * @param indent The indentation level.
+     * @return A formatted JSON string representation of the object.
+     */
     private static String formatJsonResponse(Object data, int indent) {
         if (data instanceof List) {
             return formatJsonArray((List<?>) data, indent);
@@ -151,6 +194,13 @@ public class Utils {
         }
     }
 
+    /**
+     * Formats a Map as a JSON object string.
+     *
+     * @param map The Map to be formatted.
+     * @param indent The indentation level.
+     * @return A formatted JSON object string.
+     */
     private static String formatJsonObject(Map<?, ?> map, int indent) {
         StringBuilder sb = new StringBuilder("{\n");
         String indentStr = "  ".repeat(indent + 1);
@@ -173,6 +223,13 @@ public class Utils {
         return sb.toString();
     }
 
+    /**
+     * Formats a List as a JSON array string.
+     *
+     * @param list The List to be formatted.
+     * @param indent The indentation level.
+     * @return A formatted JSON array string.
+     */
     private static String formatJsonArray(List<?> list, int indent) {
         StringBuilder sb = new StringBuilder("[\n");
         String indentStr = "  ".repeat(indent + 1);
@@ -187,6 +244,13 @@ public class Utils {
         return sb.toString();
     }
 
+    /**
+     * Performs a GET request to a JSON API endpoint.
+     *
+     * @param api The base URL of the API.
+     * @param endpoint The specific endpoint to call.
+     * @return The JSON response as a string.
+     */
     public static String jsonResponseObject(String api, String endpoint) {
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(api).path(endpoint);
@@ -196,6 +260,14 @@ public class Utils {
         return apiResponse.readEntity(String.class);
     }
 
+    /**
+     * Performs a POST request to a JSON API endpoint.
+     *
+     * @param url The full URL of the API endpoint.
+     * @param headers A map of headers to be included in the request.
+     * @param jsonBody The JSON body of the POST request.
+     * @return The JSON response as a string.
+     */
     public static String postJsonRequest(String url, Map<String, String> headers, String jsonBody) {
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(url);
@@ -211,6 +283,13 @@ public class Utils {
         return response.readEntity(String.class);
     }
 
+    /**
+     * Performs a GET request to a JSON API endpoint with custom headers.
+     *
+     * @param url The full URL of the API endpoint.
+     * @param headers A map of headers to be included in the request.
+     * @return The JSON response as a string.
+     */
     public static String jsonResponseObject(String url, Map<String, String> headers) {
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(url);

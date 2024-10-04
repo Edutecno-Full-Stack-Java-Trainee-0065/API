@@ -9,15 +9,33 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Clase que implementa la interfaz ApiClient para interactuar con la API de
+ * Picking.
+ */
 public class PickingApiClient implements ApiClient {
 
+    /**
+     * URL base de la API de Picking.
+     */
     private static final String API_BASE_URL = "http://54.174.216.183:8080/api";
 
+    /**
+     * Obtiene la respuesta de la API.
+     *
+     * @return ApiResponse con la respuesta de la API.
+     */
     @Override
     public ApiResponse getResponse() {
         return getAllFiltros();
     }
 
+    /**
+     * Realiza un login en la API de Picking.
+     *
+     * @param username Username del usuario.
+     * @param password Contrase a del usuario.
+     */
     public void login(String username, String password) {
         String loginEndpoint = "/auth/login";
         String jsonBody = "{\"username\":\"" + username + "\",\"password\":\"" + password + "\"}";
@@ -40,6 +58,11 @@ public class PickingApiClient implements ApiClient {
         }
     }
 
+    /**
+     * Obtiene todos los filtros de la API de Picking.
+     *
+     * @return ApiResponse con la lista de filtros.
+     */
     public ApiResponse getAllFiltros() {
         String endpoint = "/filtros";
         Map<String, String> headers = getAuthHeaders();
@@ -76,6 +99,13 @@ public class PickingApiClient implements ApiClient {
         return response;
     }
 
+    /**
+     * Obtiene todos los usuarios de la API de Picking.
+     *
+     * @param page  N mero de p gina.
+     * @param size  N mero de elementos por p gina.
+     * @return ApiResponse con la lista de usuarios.
+     */
     public ApiResponse getAllUsers(int page, int size) {
         String endpoint = "/users?page=" + page + "&size=" + size;
         Map<String, String> headers = getAuthHeaders();
@@ -104,13 +134,22 @@ public class PickingApiClient implements ApiClient {
 
         response.addData("users", formattedUsers);
 
-        // Extraer información de paginación
+        // Extraer informaci n de paginaci n
         response.addData("totalPages", Utils.extractNumericValue(jsonResponse, "totalPages"));
         response.addData("totalElements", Utils.extractNumericValue(jsonResponse, "totalElements"));
 
         return response;
     }
 
+    /**
+     * Genera un Map con los headers de autenticaci n necesarios para las peticiones a la API.
+     *
+     * @return Map con los headers de autenticaci n. El Map contiene un header llamado "Authorization" con el valor "Bearer <token>" donde <token> es el token de autenticaci n guardado por {@link TokenManager}.
+     *         Si el token no ha sido guardado, se devuelve un Map vac o.
+     *
+     * @see TokenManager#saveToken(String, String)
+     * @see TokenManager#getToken()
+     */
     private Map<String, String> getAuthHeaders() {
         Map<String, String> headers = new HashMap<>();
         String token = TokenManager.getToken();
